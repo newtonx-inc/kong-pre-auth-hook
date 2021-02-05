@@ -6,57 +6,60 @@ return {
         {
             protocols = typedefs.protocols_http
         },
-        config = {
-            type = 'record',
-            fields = {
-                -- Describe your plugin's configuration's schema here.
-                {
-                    -- Additional headers to strip out
-                    strip_headers = {
-                        type = "array",
-                        required = false,
-                        elements = {
-                            type = "string"
+        {
+
+            config = {
+                type = 'record',
+                fields = {
+                    -- Describe your plugin's configuration's schema here.
+                    {
+                        -- Additional headers to strip out
+                        strip_headers = {
+                            type = "array",
+                            required = false,
+                            elements = {
+                                type = "string"
+                            },
+                            default = {},
                         },
-                        default = {},
                     },
-                },
-                {
-                    -- HTTP Methods to require authentication on
-                    match_methods = {
-                        type = "array",
-                        required = false,
-                        elements = typedefs.http_method,
+                    {
+                        -- HTTP Methods to require authentication on
+                        match_methods = {
+                            type = "array",
+                            required = false,
+                            elements = typedefs.http_method,
+                        },
                     },
-                },
-                {
-                    -- Paths to require authentication on
-                    match_paths = {
-                        type = typedefs.paths,
-                        required = false,
+                    {
+                        -- Paths to require authentication on
+                        match_paths = {
+                            type = typedefs.paths,
+                            required = false,
+                        },
                     },
-                },
-                {
-                    -- Hosts to require authentication on
-                    match_hosts = {
-                        type = typedefs.hosts,
-                        required = false,
+                    {
+                        -- Hosts to require authentication on
+                        match_hosts = {
+                            type = typedefs.hosts,
+                            required = false,
+                        },
                     },
-                },
-                {
-                    -- Headers to require authentication on
-                    match_headers = {
-                        type = "array",
-                        required = false,
-                        elements = "string",
+                    {
+                        -- Headers to require authentication on
+                        match_headers = {
+                            type = "array",
+                            required = false,
+                            elements = "string",
+                        },
                     },
-                },
-                {
-                  -- The id of an anonymous consumer
-                  anonymous = {
-                      type = "string",
-                      required = false,
-                  },
+                    {
+                      -- The id of an anonymous consumer
+                      anonymous = {
+                          type = "string",
+                          required = false,
+                      },
+                    },
                 },
             },
         },
