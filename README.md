@@ -1,5 +1,5 @@
 # Kong PreAuth Hook
-A Kong plugin for performing operations before auth plugins run
+A Kong plugin for performing configurable operations before auth plugins run
 
 **kong-pre-auth-hook** performs a few customizable operations before auth plugins run, such as stripping auth headers
 that can be spoofed by requesters, and allowing for more finer grained control of whether auth plugins should run

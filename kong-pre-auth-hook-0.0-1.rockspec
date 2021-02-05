@@ -1,11 +1,11 @@
 package = "kong-pre-auth-hook"
-version = "0.0-0"
+version = "0.0-1"
 source = {
    url = "git://github.com/newtonx-inc/kong-pre-auth-hook",
-   tag = "v0.0-0"
+   tag = "v0.0-1"
 }
 description = {
-   summary = "A Kong plugin for performing operations before auth plugins run",
+   summary = "A Kong plugin for performing configurable operations before auth plugins run",
    detailed = [[
        kong-pre-auth-hook performs a few customizable operations before auth plugins run, such as stripping auth headers
        that can be spoofed by requesters, and allowing for more finer grained control of whether auth plugins should run
