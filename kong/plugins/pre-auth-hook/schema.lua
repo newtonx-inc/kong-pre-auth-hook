@@ -50,7 +50,9 @@ return {
                         match_headers = {
                             type = "array",
                             required = false,
-                            elements = "string",
+                            elements = {
+                                type = "string",
+                            },
                         },
                     },
                     {
