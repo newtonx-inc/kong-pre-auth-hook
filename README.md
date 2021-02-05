@@ -41,7 +41,7 @@ luarocks install kong-pre-auth-hook
 Make sure you set your `KONG_PLUGINS` environment variable such that it reflects this plugin:
 
 ```bash
-export KONG_PLUGINS=bundled,kong-pre-auth-hook
+export KONG_PLUGINS=bundled,pre-auth-hook
 ```
 
 # Requirements
