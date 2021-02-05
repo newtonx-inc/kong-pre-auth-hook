@@ -3,7 +3,7 @@ A Kong plugin for performing operations before auth plugins run
 
 **kong-pre-auth-hook** performs a few customizable operations before auth plugins run, such as stripping auth headers
 that can be spoofed by requesters, and allowing for more finer grained control of whether auth plugins should run
-or not based on the request.
+or not based on the request. This plugin works in conjunction with [kong-post-auth-hook](https://github.com/newtonx-inc/kong-post-auth-hook)
 
 # What this plugin does
 ## Strips headers that can be spoofed
@@ -45,9 +45,11 @@ export KONG_PLUGINS=bundled,pre-auth-hook
 ```
 
 # Requirements
-* Kong auth plugins to be used in conjunction (e.g. oauth2, key-auth, jwt, etc.)
+* Kong auth plugins to be used in conjunction (e.g. oauth2, key-auth, jwt, etc.). All must be configured in 
+["Logical OR"](https://docs.konghq.com/gateway-oss/2.2.x/auth/) mode.
+* [Kong Post Auth Hook plugin](https://github.com/newtonx-inc/kong-post-auth-hook) 
 
-# Dependencies
+# Dependencies (3rd party libs)
 None
 
 # Configuration
