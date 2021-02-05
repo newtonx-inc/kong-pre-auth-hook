@@ -33,17 +33,11 @@ return {
                     },
                     {
                         -- Paths to require authentication on
-                        match_paths = {
-                            type = typedefs.paths,
-                            required = false,
-                        },
+                        match_paths = typedefs.paths,
                     },
                     {
                         -- Hosts to require authentication on
-                        match_hosts = {
-                            type = typedefs.hosts,
-                            required = false,
-                        },
+                        match_hosts = typedefs.hosts,
                     },
                     {
                         -- Headers to require authentication on
