@@ -27,14 +27,6 @@ return {
                         type = "array",
                         required = false,
                         elements = typedefs.http_method,
-                        default = {
-                            "GET",
-                            "POST",
-                            "PUT",
-                            "PATCH",
-                            "DELETE",
-                            "OPTIONS",
-                        },
                     },
                 },
                 {
@@ -42,7 +34,6 @@ return {
                     match_paths = {
                         type = typedefs.paths,
                         required = false,
-                        default = {},
                     },
                 },
                 {
@@ -50,7 +41,6 @@ return {
                     match_hosts = {
                         type = typedefs.hosts,
                         required = false,
-                        default = {},
                     },
                 },
                 {
@@ -59,8 +49,14 @@ return {
                         type = "array",
                         required = false,
                         elements = "string",
-                        default = {},
                     },
+                },
+                {
+                  -- The id of an anonymous consumer
+                  anonymous = {
+                      type = "string",
+                      required = false,
+                  },
                 },
             },
         },

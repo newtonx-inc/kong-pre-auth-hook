@@ -3,10 +3,11 @@
 -- can be called from your child implementation and will print logs
 -- in your `error.log` file (where all logs are printed).
 local BasePlugin = require "kong.plugins.base_plugin"
+local Access = require('kong.plugins.pre-auth-hook.access')
 
 local PreAuthHookHandler = BasePlugin:extend()
 
-PreAuthHookHandler.VERSION = "0.2.0"
+PreAuthHookHandler.VERSION = "0.0.0"
 PreAuthHookHandler.PRIORITY = 1100 -- Execute before all Kong auth plugins
 
 
@@ -21,9 +22,7 @@ function PreAuthHookHandler:init_worker()
     -- Eventually, execute the parent implementation
     -- (will log that your plugin is entering this context)
     PreAuthHookHandler.super.init_worker(self)
-
     -- Implement any custom logic here
-    -- TODO
 
 end
 
@@ -32,7 +31,7 @@ function PreAuthHookHandler:access(config)
     -- (will log that your plugin is entering this context)
     PreAuthHookHandler.super.access(self)
     -- Implement any custom logic here
-
+    Access:start(config)
 end
 
 
