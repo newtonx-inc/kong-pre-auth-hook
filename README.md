@@ -63,9 +63,18 @@ None
 | match_headers |         | No        | Headers to require authentication on                                                                                |
 | anonymous     |         | No        | Consumer ID to use as an "anonymous" consumer if auth fails. Used for "logical OR" in Kong multiple authentication. |
 
+## Details
+### match_paths
+* Any valid LUA regex will do here. NOTE: The starting character (`^`) is implied here. E.g. `/.+/api/v1` translates
+to `^/.+/api/v1`, such that a path of /rest/namespace/api/v1/hello would match.
+* Note that the path evaluated contains the full path, before konghq.com/strip-path: "true" applies (if set). Thus, if you 
+have a prefix, like /rest/namespace before /api/v1/hello (as in the example above), that prefix is included in the evaluation.
+Thus, the regex in the example above contains `/.+/` in the beginning. 
+
 ## Important notes
 * If ANY of the match_* criteria are met for a given request, authentication will be required. 
-* If you need more advanced control than this, it is recommended that you control this application-side.
+* If you need more advanced control than this, it is recommended that you control this application-side, as all the auth 
+mechanisms forward headers containing user info to the upstream by default.
 
 # Development
 ## Publishing to LuaRocks

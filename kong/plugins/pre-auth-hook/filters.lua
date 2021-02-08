@@ -34,9 +34,8 @@ function Filters:checkMatchingPaths()
     -- If *paths* is nil, false is automatically returned
     -- Returns: bool
 
-    kong.log.debug("[filters.lua] : Checking paths for a match")
-
     local currentPath = kong.request.get_path()
+    kong.log.debug("[filters.lua] : Checking paths for a match to: " .. currentPath)
 
     for _, path in ipairs(self.config.match_paths or {}) do
         local match = string.find(currentPath, "^" .. path)
@@ -55,7 +54,7 @@ function Filters:checkMatchingHosts()
 
     kong.log.debug("[filters.lua] : Checking hosts for a match")
 
-    local hosts = self.config.match_paths
+    local hosts = self.config.match_hosts
 
     if not hosts then
         return false
