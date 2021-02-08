@@ -63,7 +63,7 @@ function Access:start(config)
         -- know to ignore.
         kong.log.debug("[access.lua] : Request does not require auth. Injecting anonymous consumer info into headers.")
         local utilities = Utilities:new(config)
-        utilities.skipAuth()
+        utilities:skipAuth()
     end
 end
 

@@ -38,7 +38,7 @@ function Filters:checkMatchingPaths()
 
     local currentPath = kong.request.get_path()
 
-    for _, path in ipairs(self.config.match_paths) do
+    for _, path in ipairs(self.config.match_paths or {}) do
         local match = string.find(currentPath, "^" .. path)
         if match then
             return true
@@ -90,7 +90,6 @@ end
 function Filters:new(config)
     -- Constructor
     -- :param config: The plugin's config object
-
     self.config = config
     return Filters
 end
@@ -98,8 +97,7 @@ end
 function Filters:checkMatchingAll()
     -- Checks all match-* conditions in the plugin config to determine whether the given request matches any of the conditions
     -- Returns: bool
-
-    return self.checkMatchingHeaders() or self.checkMatchingHosts() or self.checkMatchingHttpMethod() or self.checkMatchingPaths()
+    return self:checkMatchingHeaders() or self:checkMatchingHosts() or self:checkMatchingHttpMethod() or self:checkMatchingPaths()
 end
 
 return Filters

@@ -1,5 +1,7 @@
 local set_header = kong.service.request.set_header
 local clear_header = kong.service.request.clear_header
+local constants = require("kong.constants")
+
 
 local Utilities = {
     config = nil,
