@@ -28,9 +28,6 @@ return {
                         match_routes = {
                             type = "array",
                             required = false,
-                            elements = {
-                                type = "map",
-                            },
                             default = {},
                         },
                     },
