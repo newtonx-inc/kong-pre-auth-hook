@@ -29,7 +29,7 @@ return {
                             type = "array",
                             required = false,
                             elements = {
-                                type = "table",
+                                type = "map",
                             },
                             default = {},
                         },
