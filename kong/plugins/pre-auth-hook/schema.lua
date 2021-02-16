@@ -30,7 +30,9 @@ return {
                             required = false,
                             elements = {
                               type = "map",
-                              keys = "string",
+                              keys = {
+                                  type = "string",
+                              },
                               values = {
                                 type = "array",
                                 elements = {
