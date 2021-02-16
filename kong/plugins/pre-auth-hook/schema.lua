@@ -23,30 +23,15 @@ return {
                             default = {},
                         },
                     },
+                    -- Routes to enforce authentication on
                     {
-                        -- HTTP Methods to require authentication on
-                        match_methods = {
-                            type = "array",
-                            required = false,
-                            elements = typedefs.http_method,
-                        },
-                    },
-                    {
-                        -- Paths to require authentication on
-                        match_paths = typedefs.paths,
-                    },
-                    {
-                        -- Hosts to require authentication on
-                        match_hosts = typedefs.hosts,
-                    },
-                    {
-                        -- Headers to require authentication on
-                        match_headers = {
+                        match_routes = {
                             type = "array",
                             required = false,
                             elements = {
-                                type = "string",
+                                type = "table",
                             },
+                            default = {},
                         },
                     },
                     {

@@ -13,14 +13,13 @@ local function matchExists(obj, list)
     return false
 end
 
-function Filters:checkMatchingHttpMethod()
+function Filters:checkMatchingHttpMethod(methods)
     -- Checks whether the current request is a match for one of the given methods.
+    -- :param methods: Methods to check against
     -- If *methods* is nil, false is automatically returned
     -- Returns: bool
 
     kong.log.debug("[filters.lua] : Checking HTTP methods for a match")
-
-    local methods = self.config.match_methods
 
     if not methods then
         return false
@@ -29,15 +28,16 @@ function Filters:checkMatchingHttpMethod()
     return matchExists(kong.request.get_method(), methods)
 end
 
-function Filters:checkMatchingPaths()
+function Filters:checkMatchingPaths(paths)
     -- Checks whether the current request is a match for one of the given paths.
+    -- :param paths: Paths to check against
     -- If *paths* is nil, false is automatically returned
     -- Returns: bool
 
     local currentPath = kong.request.get_path()
     kong.log.debug("[filters.lua] : Checking paths for a match to: " .. currentPath)
 
-    for _, path in ipairs(self.config.match_paths or {}) do
+    for _, path in ipairs(paths or {}) do
         local match = string.find(currentPath, "^" .. path)
         if match then
             return true
@@ -47,14 +47,13 @@ function Filters:checkMatchingPaths()
     return false
 end
 
-function Filters:checkMatchingHosts()
+function Filters:checkMatchingHosts(hosts)
     -- Checks whether the current request is a match for one of the given hosts.
+    -- :param hosts: Hosts to check against
     -- If *hosts* is nil, false is automatically returned
     -- Returns: bool
 
     kong.log.debug("[filters.lua] : Checking hosts for a match")
-
-    local hosts = self.config.match_hosts
 
     if not hosts then
         return false
@@ -63,14 +62,13 @@ function Filters:checkMatchingHosts()
     return matchExists(kong.request.get_host(), hosts)
 end
 
-function Filters:checkMatchingHeaders()
+function Filters:checkMatchingHeaders(headers)
     -- Checks whether the current request is a match for one of the given headers.
+    -- :param headers: Headers to check against
     -- If *headers* is nil, false is automatically returned
     -- Returns: bool
 
     kong.log.debug("[filters.lua] : Checking header names for a match")
-
-    local headers = self.config.match_headers
 
     if not headers then
         return false
@@ -94,9 +92,18 @@ function Filters:new(config)
 end
 
 function Filters:checkMatchingAll()
-    -- Checks all match-* conditions in the plugin config to determine whether the given request matches any of the conditions
+    -- Checks all match conditions in the plugin config to determine whether the given request matches any of the conditions
     -- Returns: bool
-    return self:checkMatchingHeaders() or self:checkMatchingHosts() or self:checkMatchingHttpMethod() or self:checkMatchingPaths()
+
+    -- If no routes, return false
+    -- Otherwise, iterate through routes to see if any matches exist
+    for _, route in ipairs(self.config.match_routes or {}) do
+        local res = self:checkMatchingHosts({route.host}) and self:checkMatchingPaths(route.paths) and self:checkMatchingHttpMethod(route.methods) and self:checkMatchingHeaders({route.headers})
+        if res then
+            return true
+        end
+    end
+    return false
 end
 
 return Filters

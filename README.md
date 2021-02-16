@@ -17,7 +17,7 @@ only plugins within your Kong setup would ever write those headers. You may also
 * `X-Consumer-Username`
 * `X-Credential-Identifier`
 * `X-Anonymous-Consumer`
-* `X-User-Info` (used by kong-oidc-google-groups plugin)
+* `X-Userinfo` (used by kong-oidc-google-groups plugin)
 * `X-Auth-Mechanism` (used by kong-post-auth-hook plugin, optionally)
 * `X-Skip-Kong-Auth` (used by kong-post-auth-hook plugin)
 
@@ -57,14 +57,30 @@ None
 | Parameter     | Default | Required? | Description                                                                                                         |
 |---------------|---------|-----------|---------------------------------------------------------------------------------------------------------------------|
 | strip_headers | {}      | No        | Additional headers to strip out before the upstream request                                                         |
-| match_methods |         | No        | HTTP Methods to require authentication on                                                                           |
-| match_paths   |         | No        | Paths to require authentication on                                                                                  |
-| match_hosts   |         | No        | Hosts to require authentication on                                                                                  |
-| match_headers |         | No        | Headers to require authentication on                                                                                |
+| match_routes  | {}      | No        | Routes to match on. This includes the host, paths, and methods                                                      |
 | anonymous     |         | No        | Consumer ID to use as an "anonymous" consumer if auth fails. Used for "logical OR" in Kong multiple authentication. |
 
+## Examples
+
+```yaml
+#...
+config:
+  match_routes: 
+    - host: foo.mydomain.com
+      paths: 
+        - /protected
+      methods: 
+        - GET
+        - POST
+    - path: 
+        - /
+      headers:
+        - X-Special-Header 
+#...
+```
+
 ## Details
-### match_paths
+### Paths
 * Any valid LUA regex will do here. NOTE: The starting character (`^`) is implied here. E.g. `/.+/api/v1` translates
 to `^/.+/api/v1`, such that a path of /rest/namespace/api/v1/hello would match.
 * Note that the path evaluated contains the full path, before konghq.com/strip-path: "true" applies (if set). Thus, if you 
@@ -72,7 +88,7 @@ have a prefix, like /rest/namespace before /api/v1/hello (as in the example abov
 Thus, the regex in the example above contains `/.+/` in the beginning. 
 
 ## Important notes
-* If ANY of the match_* criteria are met for a given request, authentication will be required. 
+* If ANY of the criteria are met for a given request, authentication will be required. 
 * If you need more advanced control than this, it is recommended that you control this application-side, as all the auth 
 mechanisms forward headers containing user info to the upstream by default.
 

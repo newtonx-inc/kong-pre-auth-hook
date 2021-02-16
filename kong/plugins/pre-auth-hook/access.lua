@@ -15,7 +15,7 @@ local function stripHeaders(config)
         'X-Consumer-Username',
         'X-Credential-Identifier',
         'X-Anonymous-Consumer',
-        'X-User-Info',
+        'X-Userinfo',
         'X-Auth-Mechanism',
         'X-Skip-Kong-Auth',
         'X-Consumer-Group-Memberships',
