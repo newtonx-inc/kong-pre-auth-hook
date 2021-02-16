@@ -1,8 +1,8 @@
 package = "kong-pre-auth-hook"
-version = "1.1-3"
+version = "1.1-4"
 source = {
    url = "git://github.com/newtonx-inc/kong-pre-auth-hook",
-   tag = "v1.1-3"
+   tag = "v1.1-4"
 }
 description = {
    summary = "A Kong plugin for performing configurable operations before auth plugins run",
