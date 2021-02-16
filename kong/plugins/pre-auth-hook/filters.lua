@@ -16,13 +16,13 @@ end
 function Filters:checkMatchingHttpMethod(methods)
     -- Checks whether the current request is a match for one of the given methods.
     -- :param methods: Methods to check against
-    -- If *methods* is nil, false is automatically returned
+    -- If *methods* is nil or empty, true is automatically returned (assume all methods are protected)
     -- Returns: bool
 
     kong.log.debug("[filters.lua] : Checking HTTP methods for a match")
 
-    if not methods then
-        return false
+    if (not methods) or (next(methods) == nil) then
+        return true
     end
 
     return matchExists(kong.request.get_method(), methods)
@@ -31,11 +31,15 @@ end
 function Filters:checkMatchingPaths(paths)
     -- Checks whether the current request is a match for one of the given paths.
     -- :param paths: Paths to check against
-    -- If *paths* is nil, false is automatically returned
+    -- If *paths* is nil or empty, true is automatically returned (assume all paths are protected)
     -- Returns: bool
 
     local currentPath = kong.request.get_path()
     kong.log.debug("[filters.lua] : Checking paths for a match to: " .. currentPath)
+
+    if (not paths) or (next(paths) == nil) then
+        return true
+    end
 
     for _, path in ipairs(paths or {}) do
         local match = string.find(currentPath, "^" .. path)
@@ -50,13 +54,13 @@ end
 function Filters:checkMatchingHosts(hosts)
     -- Checks whether the current request is a match for one of the given hosts.
     -- :param hosts: Hosts to check against
-    -- If *hosts* is nil, false is automatically returned
+    -- If *hosts* is nil or empty, true is automatically returned (assume all hosts are protected)
     -- Returns: bool
 
     kong.log.debug("[filters.lua] : Checking hosts for a match")
 
-    if not hosts then
-        return false
+    if (not hosts) or (next(hosts) == nil) then
+        return true
     end
 
     return matchExists(kong.request.get_host(), hosts)
@@ -65,13 +69,13 @@ end
 function Filters:checkMatchingHeaders(headers)
     -- Checks whether the current request is a match for one of the given headers.
     -- :param headers: Headers to check against
-    -- If *headers* is nil, false is automatically returned
+    -- If *headers* is nil or empty, true is automatically returned (assume all headers protected)
     -- Returns: bool
 
     kong.log.debug("[filters.lua] : Checking header names for a match")
 
-    if not headers then
-        return false
+    if (not headers) or (next(headers) == nil) then
+        return true
     end
 
     for _, headerKey in ipairs(headers) do

@@ -66,14 +66,13 @@ None
 #...
 config:
   match_routes: 
-    - host: foo.mydomain.com
+    - hosts: 
+        - foo.mydomain.com
       paths: 
         - /protected
       methods: 
         - GET
         - POST
-    - path: 
-        - /
       headers:
         - X-Special-Header 
 #...
