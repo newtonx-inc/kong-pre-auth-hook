@@ -28,6 +28,16 @@ return {
                         match_routes = {
                             type = "array",
                             required = false,
+                            {
+                              type = "map",
+                              keys = "string",
+                              values = {
+                                type = "array",
+                                elements = {
+                                  type = "string",
+                                },
+                              },
+                            },
                             default = {},
                         },
                     },

@@ -98,7 +98,7 @@ function Filters:checkMatchingAll()
     -- If no routes, return false
     -- Otherwise, iterate through routes to see if any matches exist
     for _, route in ipairs(self.config.match_routes or {}) do
-        local res = self:checkMatchingHosts({route.host}) and self:checkMatchingPaths(route.paths) and self:checkMatchingHttpMethod(route.methods) and self:checkMatchingHeaders({route.headers})
+        local res = self:checkMatchingHosts(route.hosts) and self:checkMatchingPaths(route.paths) and self:checkMatchingHttpMethod(route.methods) and self:checkMatchingHeaders(route.headers)
         if res then
             return true
         end
