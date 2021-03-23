@@ -33,8 +33,7 @@ function Filters:checkMatchingPaths(paths)
     -- :param paths: Paths to check against
     -- If *paths* is nil or empty, true is automatically returned (assume all paths are protected)
     -- Returns: bool
-
-    local currentPath = kong.request.get_path()
+    local currentPath = ngx.var.upstream_uri
     kong.log.debug("[filters.lua] : Checking paths for a match to: " .. currentPath)
 
     if (not paths) or (next(paths) == nil) then
